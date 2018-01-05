@@ -1,0 +1,45 @@
+Swimmer
+Id: Int
+Name: String
+Age: Int
+Membersship: Enum (Active/Passive)
+Swimmertype: Enum (Junior/Senior)
+Competing: Boolean
+
+Coach
+Id: Int
+Name: String
+
+Team
+Id: Int
+Name: String
+coachId: Int
+swimmerId: [Int]
+
+Disciplins
+Id: Int
+Name: String
+//swimmerId: [Int]
+
+Training
+Id: Int
+swimmerId: Id
+DisciplinName: String
+[{Time: Int
+Date: Date}]
+
+Competition
+Id: Int
+swimmerId: Id
+DisciplinName: String
+[{Event: String
+Rank: Int
+Time: String
+Date: Date }]
+
+
+TopFive
+Id: Int
+Training: [{}]
+Competition: [{}]
+
