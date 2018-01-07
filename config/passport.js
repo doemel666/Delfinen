@@ -21,9 +21,10 @@ module.exports = function (passport) {
     typeField: 'type',
     passReqToCallback: true
   },function(req,email, password, done) {
-    if(req.body.Formand) {
+    if(req.body.type=='Formand') {
         console.log("Formand")
     } else {
+        
         Coach.getCoachByEmail(email,function(err,coach) {
           if(err) {
             return done(err)
@@ -34,6 +35,7 @@ module.exports = function (passport) {
           if(!Coach.comparePasswords(password,coach.password)) {
             return done(null,false, { message: 'Incorrect password.' })
           }
+          
           return done(null, coach)
           
         })

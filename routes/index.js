@@ -10,10 +10,8 @@ router.get('/', function(req,res) {
 router.post('/', passport.authenticate('local-login', {
     successRedirect: '/dashboard',
     failureRedirect: '/'
-}),function(req,res) {
-    console.log(req.body);
-    //res.json({message:'It worked'})
-});
+}))
+
 /*
 passport.serializeUser(function(user, done) {
     done(null, user.id);
