@@ -3,25 +3,17 @@ var router = express.Router();
 var moongose = require('mongoose');
 var Swimmer = require('../models/Swimmer');
 
-var test = require('../functions/test')
+var SwimmersController = require('../controllers/swimmers');
+
+//var test = require('../functions/test')
 
 //Checkauth can be added to every route I want to.
 //It checks if the the request has a webtoken. (Is logged in)  
-var checkAuth = require('../functions/check-auth');
+//var checkAuth = require('../functions/check-auth');
 //router.use(test.auth);
     
 
-router.get('/',function(req,res) {    
-        console.log("Swimmers:")
-        console.log(req.testData);
-    Swimmer.getAllSwimmers(function(err,swimmers){
-        if(err) {
-            res.json(err)
-        } else {
-            res.status(200).json(swimmers)
-        }
-    })
-})
+router.get('/', SwimmersController.get_all_swimmers)
 
 router.delete('/:id',function(req,res) {
     Swimmer.deleteSwimmer(req.params.id,function(err) {

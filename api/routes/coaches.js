@@ -4,6 +4,10 @@ var moongose = require('mongoose');
 
 var Coach = require('../models/coach');
 
+var passport = require('passport');
+LocalStrategy = require('passport-local').Strategy;
+
+
 router.post('/signup',function(req,res){
     
     var coach = {
@@ -22,15 +26,7 @@ router.post('/signup',function(req,res){
     })
 }) 
 
-router.post('/login',function(req,res) {
-    Coach.loginCoach(req.body.email,req.body.password,function(err,result) {
-        if(err) {
-            res.json(err)
-        } else {
-            res.json(result);
-        }
-    })
-})
+
 
 router.get('/',function(req,res) {
     
@@ -39,6 +35,41 @@ router.get('/',function(req,res) {
             res.json(err);
         } else {
             res.json(coaches);
+        }
+    })
+})
+/*
+passport.use(new LocalStrategy(
+    function(email, password, done) {
+      console.log("Er jeg he???");
+    }));
+
+passport.serializeUser(function(user, done) {
+        done(null, user.id);
+      });
+       
+passport.deserializeUser(function(id, done) {
+        User.findById(id, function(err, user) {
+          done(err, user);
+        });
+      });
+
+router.post('/login', passport.authenticate('local'),function(req,res) {
+    Coach.loginCoach(req.body.email,req.body.password,function(err,result) {
+        if(err) {
+            res.json(err)
+        } else {
+            res.json(result);
+        }
+    })
+})*/
+
+router.post('/login',function(req,res) {
+    Coach.loginCoach(req.body.email,req.body.password,function(err,result) {
+        if(err) {
+            res.json(err)
+        } else {
+            res.json(result);
         }
     })
 })

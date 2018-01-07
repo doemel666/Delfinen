@@ -4,11 +4,14 @@ var bodyparser = require('body-parser');
 var morgan = require('morgan');
 var mongoose = require('mongoose');
 var session = require('express-session');
+var passport = require('passport');
+require('./config/passport')(passport);
 
 //Connect to my database
 mongoose.connect('mongodb://admin:' + process.env.MONGO_ATLAS_PW + '@delfinen-shard-00-00-kxjsd.mongodb.net:27017,delfinen-shard-00-01-kxjsd.mongodb.net:27017,delfinen-shard-00-02-kxjsd.mongodb.net:27017/test?ssl=true&replicaSet=Delfinen-shard-0&authSource=admin', {
     useMongoClient: true
 });
+
 
 
 // configure app to use bodyParser()
@@ -34,11 +37,19 @@ app.use(session({secret: 'ssshhhhh'}))
 var testMiddleware = require('./api/functions/check_something');
 app.use(testMiddleware.testData);
 
+//Passport 
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+//ViewEngine
+app.set('view engine', 'ejs');
+
 //routes
 var apiRoute = require('./api/routes/index');
-
 app.use('/api',apiRoute);
-
+var viewsRoute = require('./routes/index');
+app.use('/',viewsRoute);
 
 //If I try to access a route that is not avaliable in the api
 //It next (forwards) the error to the next error handler 

@@ -1,3 +1,4 @@
+
 var moongose = require('mongoose');
 var ObjectId = require('mongodb').ObjectId;
 var bcrypt = require('bcrypt');
@@ -44,8 +45,20 @@ module.exports = {
         })
     },
 
+    getCoachById: function(id,callback){
+        Coach.findOne({_id:id},callback)
+    },
+
     getAllCoaches : function(callback) {
         Coach.find({},callback);
+    },
+
+    getCoachByEmail: function(email,callback) {
+        Coach.findOne({email:email},callback);
+    },
+
+    comparePasswords: function(password,coachPassword) {
+         return bcrypt.compareSync(password,coachPassword);
     },
 
     loginCoach : function(email,password,callback) {

@@ -1,0 +1,44 @@
+<html>
+<head>
+  <% include ./partials/head %>
+
+  <style>
+  #headline{
+    text-align: center;
+    margin-top: 20%;
+    font-size: 40px
+  }
+  
+  .center{
+    text-align: center
+  }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+      <div id="headline">Velkommen til Delfinen</div>
+      <div class="center">Vælg Login</div>
+      <div class="center">
+        <h2 class="page-header">Account Login</h2>
+        <form method="post" action="/">
+          <div class="form-group">
+            <label>Username</label>
+            <input type="text" id="email" class="form-control" name="email" placeholder="Email">
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="password" class="form-control" name="password" placeholder="Password">
+          </div>
+          <div class="form-group"></div>
+            <label class="radio-inline"><input type="radio" id="type" name="Formand"> Formand </label>
+            <label class="radio-inline"><input type="radio" id="type" name="Træner"> Træner </label>
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+      </div>
+  </div>
+</body>
+
+
+</html>
