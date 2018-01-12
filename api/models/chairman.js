@@ -5,6 +5,7 @@ var bcrypt = require('bcrypt');
 
 var chairmanSchema = moongose.Schema({
     _id : moongose.Schema.Types.ObjectId,
+    name: String,
     email : {type: String, 
             required: true, 
             match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/},
@@ -41,7 +42,21 @@ module.exports = {
             }
         })
         
+    },
 
-    }
+    getAllChairmans: function(callback) {
+        Chairman.find({},callback);
+    },
 
+    getChairManByEmail: function(email,callback) {
+        Chairman.findOne({email:email},callback)
+    },
+
+    comparePasswords: function(password,chairManPassword) {
+        return bcrypt.compareSync(password,chairManPassword);
+   },
+
+   getChairManById: function(id,callback) {
+    Chairman.findOne({_id:id},callback)
+},
 }

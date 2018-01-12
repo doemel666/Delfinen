@@ -1,0 +1,103 @@
+<html>
+<head>
+  <% include ./partials/head %>
+
+  <style>
+      .wrapper {
+          float: left;
+          margin: 5px;
+      }
+      
+      .textfield {
+         display: inline-block;
+         border-radius: 4px;
+      }
+
+      .button {
+       display: inline-block;  
+       border-radius: 4px;
+      }
+      
+  </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="wrapper">
+            <input type="text" class="textfield">
+            <button class="button">Søg</button>
+
+        </div>
+
+        <br><table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Navn</th>
+                <th scope="col">Email</th>
+                <th scope="col">Fødselsdag</th>
+                <th scope="col">Alder</th>
+                <th scope="col">Medlemsskab</th>
+                <th scope="col">Junior/Senior</th>
+                <th scope="col">Medlemstype</th>
+              </tr>
+            </thead>
+            <tbody>
+                <% for(var i = 0; i < swimmers.length; i++) { %>
+              <tr>
+                <td><%= swimmers[i].name %></th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+              </tr>
+              <% } %>
+            </tbody>
+          </table>
+
+          <!--<br><table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Navn</th>
+                <th scope="col">Email</th>
+                <th scope="col">Fødselsdag</th>
+                <th scope="col">Alder</th>
+                <th scope="col">Medlemsskab</th>
+                <th scope="col">Junior/Senior</th>
+                <th scope="col">Medlemstype</th>
+              </tr>
+            </thead>
+            <tbody id="table_body">
+            
+            </tbody>
+          </table>-->
+
+
+
+    </div>
+    
+</body>
+
+</html>
+
+<script>
+
+
+
+
+
+$( document ).ready(function() {
+    
+   /* $.ajax({
+        type: 'GET',
+        url: 'http://localhost:3000/api/swimmers',
+        success: function(data) {
+            data.forEach(element => {
+                $('#table_body').append('<tr><td>'+ element.name +'</td><td>Test</td></tr>')
+            });
+        },
+        error: function(err) {
+            console.log(err);
+        }
+    })*/
+    
+});
+</script>

@@ -1,6 +1,7 @@
 LocalStrategy = require('passport-local').Strategy;
 
 var Coach = require('../api/models/coach');
+var Chairman = require('../api/models/chairman');
 
 module.exports = function (passport) {
 
@@ -10,8 +11,15 @@ module.exports = function (passport) {
    
   passport.deserializeUser(function(id, done) {
     Coach.getCoachById(id, function(err, coach) {
-      //IF !coach check for chairman
-      done(err, coach);
+      if(!coach) {
+        Chairman.getChairManById(id,function(err,chairman) {
+          done(err,chairman)
+        })
+        
+      }
+      else {
+        done(err, coach);
+      }
     });
   });
 
@@ -22,7 +30,19 @@ module.exports = function (passport) {
     passReqToCallback: true
   },function(req,email, password, done) {
     if(req.body.type=='Formand') {
-        console.log("Formand")
+       Chairman.getChairManByEmail(email,function(err,chairman){
+        if(err) {
+          return done(err)
+        } 
+        if(!chairman) {
+          return done(null,false, {message:'Incorrect email.'})
+        }
+        if(!Chairman.comparePasswords(password,chairman.password)) {
+          return done(null,false, { message: 'Incorrect password.' })
+        } 
+        console.log("Formand");
+        return done(null, chairman)
+       }) 
     } else {
         
         Coach.getCoachByEmail(email,function(err,coach) {
@@ -35,21 +55,11 @@ module.exports = function (passport) {
           if(!Coach.comparePasswords(password,coach.password)) {
             return done(null,false, { message: 'Incorrect password.' })
           }
-          
+          console.log("Træner");
           return done(null, coach)
           
         })
     }
-    /*Coach.findOne({ email: email }, function (err, coach) {
-        if (err) { return done(err); }
-        if (!coach) {
-          return done(null, false, { message: 'Incorrect username.' });
-        }
-        if (!coach.validPassword(password)) {
-          return done(null, false, { message: 'Incorrect password.' });
-        }
-        return done(null, coach);
-      });*/
     }
   ));
 }

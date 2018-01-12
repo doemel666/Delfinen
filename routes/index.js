@@ -2,53 +2,36 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 
+var isAuth = require('../api/functions/IsAuth');
 
 router.get('/', function(req,res) {
     res.render('login_page')
 })
-
+/*
 router.post('/', passport.authenticate('local-login', {
     successRedirect: '/dashboard',
     failureRedirect: '/'
 }))
-
-/*
-passport.serializeUser(function(user, done) {
-    done(null, user.id);
-  });
-   
-passport.deserializeUser(function(id, done) {
-    User.findById(id, function(err, user) {
-      done(err, user);
-    });
-  });
-
-  passport.use('local-login', new LocalStrategy({
-    usernameField: 'email',
-    passwordField: 'password',
-    typeField: 'type',
-    passReqToCallback: true
-  },function(req,email, password, done) {
-    if(req.body.Formand) {
-        console.log("Formand")
-    } else {
-        console.log("Træner");
+*/
+router.post('/',passport.authenticate('local-login', {failureRedirect: '/'}), (req, res) => {
+    
+    if(req.body.type==='Træner') 
+    {
+      res.redirect('/coach/dashboard')
     }
-    /*Coach.findOne({ email: email }, function (err, coach) {
-        if (err) { return done(err); }
-        if (!coach) {
-          return done(null, false, { message: 'Incorrect username.' });
-        }
-        if (!coach.validPassword(password)) {
-          return done(null, false, { message: 'Incorrect password.' });
-        }
-        return done(null, coach);
-      });
+    else if(req.body.type==='Formand')
+    {
+      console.log("Er jeg her");
+      res.redirect('/chairman/dashboard')
     }
-  ));*/
+  });
 
 var coachView = require('./coaches');
+var chairmanView = require('./chairmans')
 
+//router.use(isAuth.isUserAuth);
+
+router.use('/chairman',chairmanView)
 router.use('/coach',coachView);
 
 module.exports = router;

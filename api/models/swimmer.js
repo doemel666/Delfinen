@@ -5,7 +5,8 @@
  var swimmerSchema = moongose.Schema({
     _id: moongose.Schema.Types.ObjectId,
     name: { type: String, required: true},
-    age: { type: Number, required: true},
+    dateOfBirth: Date,
+    email: String,
     memberShip: String,
     swimmerType: String,
     Competing: Boolean
@@ -20,7 +21,7 @@ var Swimmer = module.exports = moongose.model('Swimmer',swimmerSchema);
         const swimme = {
             _id : moongose.Types.ObjectId(),
             name: swimmer.name,
-            age : swimmer.age
+            //age : swimmer.age
         };
         
         Swimmer(swimme).save().then(result => {    

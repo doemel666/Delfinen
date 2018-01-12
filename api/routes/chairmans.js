@@ -15,9 +15,19 @@ router.post('/signup',function(req,res){
             res.json(err)
         }
         else {
-            res.statusCode(201).json(data)
+            res.status(201).json(data)
         }
     })
 }) 
+
+router.get('/',function(req,res) {
+    Chairman.getAllChairmans(function(err,chairmans){
+        if(err) {
+            res.json(err)
+        } else {
+            res.status(200).json(chairmans);
+        }
+    })
+})
 
 module.exports = router;
